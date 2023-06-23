@@ -144,5 +144,6 @@ window.addEventListener('load' ,function(){
 		r[i].addEventListener('change',function () {ziweiUI.genZiwei();});	
 	}
 	window.addEventListener('resize',function() { ziweiUI.resize();});
+	ziwei.getAllPossiblePlace12();
 	//$(window).resize(function() { ziweiUI.resize();});
 })

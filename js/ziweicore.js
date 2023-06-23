@@ -3,7 +3,7 @@ var ziwei = {
 	y:null, m:null, d:null, h:null, g:null, l:null, b:null, f:null, s4:null, z:null,
 	yS:null, mS:null, dS:null, LunarDay:null, ShengXiao:null,
 	y1Pos:null,	y2Pos:null,	hPos:null,	lPos:null,	bPos:null,	zPos:null, Palce:null,
-	Place12:null,
+	Place12:null, AllPossiblePlace12:null,
 	//排紫微命盤
 	computeZiWei:function (y_Solar,m_Solar,d_Solar,h_Solar,g_Solar){
 		//y:年,m:月,d:日,h:時,g:性別,l:命宮,b:身宮,f:五行局,s:起紫微表,s4:四化星;
@@ -107,6 +107,38 @@ var ziwei = {
 	  			"StarA": StarA,"StarB": StarB,"StarC": StarC,"Star6": Star6
 	  		};
 	  	}
+		if (!window.JSON) {
+			console.log("no json support")
+		} else {
+			//string_p = "";
+			//console.log(JSON.stringify(Place12))
+			// for (i = 0; i < 11; i++) {
+			// 	console.log(JSON.stringify(Place12[i]))
+			// }
+			
+		}
+	},
+	getAllPossiblePlace12:function(){
+		AllPossiblePlace12 = new Map()
+		var start_year = 1949
+		var year = 2049
+		var day = 28
+		for (y_i = start_year; y_i <= year; y_i++) {
+			for (m_i = 1; m_i <= 12; m_i++) {
+				for (d_i = 1; d_i <= day; d_i++){
+					for(h_i = 0; h_i < EarthlyBranches.length; h_i++) {
+						//console.log("year:" + y_i + ", month:" + m_i + ", day:" + d_i + ",hour:" + EarthlyBranches[h_i])
+						var zw_m = this.computeZiWei(y_i, m_i, d_i, EarthlyBranches[h_i],"M");
+						var zw_f = this.computeZiWei(y_i, m_i, d_i, EarthlyBranches[h_i],"F");
+						var str_zw_m = JSON.stringify(zw_m)
+						var str_zw_f = JSON.stringify(zw_f)
+						AllPossiblePlace12.set(str_zw_f,  1)
+						AllPossiblePlace12.set(str_zw_m, 1)
+					}
+				}
+			}
+		}
+		console.log(AllPossiblePlace12.size)
 	},
 	getDaShian:function (){
 		//大限資料準備
